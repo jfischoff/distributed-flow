@@ -1,6 +1,6 @@
 # About
 
-`distributive-flow` is simple method for zero-downtime deployment of socket based `Haskell` applications. Notably, it can bootstrap itself, facilating interactive active development.
+`distributive-flow` is simple method for zero-downtime deployment of socket based `Haskell` applications. Notably, it can bootstrap itself, facilating interactive development.
 
 `df` is meant to manage multiple versions of the same executable on a clusters of machines.
 
