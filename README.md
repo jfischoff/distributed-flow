@@ -2,7 +2,11 @@
 
 `distributive-flow` is simple method for zero-downtime deployment of socket based `Haskell` applications. Notably, it can bootstrap itself, facilating interactive development.
 
-`df` is meant to manage multiple versions of the same executable on a clusters of machines.
+`distributive-flow` is a library that used to make executables able reload themselves and manage switching between versions. 
+
+`df` is a command for orchastrating `distributive-flow` applications. `df` is meant to manage multiple versions of the same executable on a clusters of machines. 
+
+`df` is configured with an `Image`, `[PublicKey]`, a `Backend`,
 
 `df` maintains a durable store of an `[Address]` and `(Map String Address)` or `Node`s is deploy to.
 
@@ -11,6 +15,11 @@ Additionally it assumes that multiple versions of the same executable can bind t
 # Commands
 
 ##### Node Management
+- ###### Common Flags
+
+ - '--credentials' IaaS credentials
+ - '--backend' Vagrant
+ - '--authorized-users' authorized_keys file.
 - `add` the `Address` to the stored list of addresses.
  - `name` the `Address` to `add`.
 - `remove` or `rm` the `Address` from the stored list of addresses.
