@@ -2,7 +2,7 @@
 
 `distributive-flow` is simple method for zero-downtime deployment of socket based `Haskell` applications. Notably, it can bootstrap itself, facilating interactive development.
 
-`distributive-flow` is a library that used to make hot-reloadable executables.  
+`distributive-flow` is a library that is used to make hot-reloadable executables.  
 
 `df` is a command for orchastrating `distributive-flow` applications. `df` is meant to manage multiple versions of the same executable on a clusters of machines. 
 
