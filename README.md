@@ -14,7 +14,7 @@ Additionally it assumes that multiple versions of the same executable can bind t
 
 # Commands
 
-##### Node Management
+##### Provisioning
 - ###### Common Flags
 
  - '--credentials' IaaS credentials
