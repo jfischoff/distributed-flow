@@ -2,7 +2,7 @@
 
 `distributive-flow` or `dflow` for short is simple method for zero-downtime deployment of socket based `Haskell` applications.
 
-`dflow` is a command for multiple versions of the same executable on a clusters of machines.
+`dflow` is manages multiple versions of the same executable on a clusters of machines.
 
 `dflow` is configured with an `Image`, `[PublicKey]`. Additionally it is parameterized over a data store, vm provider and containerizer backends.
 
