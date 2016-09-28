@@ -1,6 +1,6 @@
 # About
 
-`distributive-flow` or `dflow` for short is simple method for zero-downtime deployment of socket based `Haskell` applications.
+`distributive-flow` or `dflow` for short is a simple method for zero-downtime deployment of socket based `Haskell` applications.
 
 `dflow` is manages multiple versions of the same executable on a clusters of machines.
 
