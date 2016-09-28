@@ -1,33 +1,38 @@
 # About
 
-`distributive-flow` is simple method for zero-downtime deployment of socket based `Haskell` applications. Notably, it can bootstrap itself, facilating interactive development.
+`distributive-flow` or `dflow` for short is simple method for zero-downtime deployment of socket based `Haskell` applications.
 
-`distributive-flow` is a library that is used to make hot-reloadable executables.  
+`dflow` is a command for multiple versions of the same executable on a clusters of machines.
 
-`df` is a command for orchastrating `distributive-flow` applications. `df` is meant to manage multiple versions of the same executable on a clusters of machines. 
+`dflow` is configured with an `Image`, `[PublicKey]`. Additionally it is parameterized over a data store, vm provider and containerizer backends.
 
-`df` is configured with an `Image`, `[PublicKey]`, a `Backend`,
+`dflow` maintains a store of an `[Address]` and `(Map String Address)` or `Node`s is deploy to.
 
-`df` maintains a durable store of an `[Address]` and `(Map String Address)` or `Node`s is deploy to.
+`dflow` is "agent less" in the sense it relies on `sshd`. `dflow` assumes client applications respond to the following signals
 
-Additionally it assumes that multiple versions of the same executable can bind to a single port, so probably `SO_REUSEPORT` must be used ... or a load balancer.
+- `SIGINT`  informs the `Executable` to begin graceful shutdown.
+- `SIGTERM`  informs the `Executable` to shutdown immediantly.
+
+# TODO Process watcher
+How does `dflow` handle registering a new process with the process watcher?
 
 # Commands
 
 ### Provisioning
-`df` can provision a `Node` for an `Executable` for a given backend using an Image. It cannot install any software or dependencies. 
+`dflow` can provision a `Node` for an `Executable` for a given backend using an Image. It cannot install any software or dependencies.
 
-Backend plugins handle dependency management and can 
+Container plugins handle dependency management and can
 ```haskell
 containerize :: Executable -> Container
 ```
-allowing for deployment. 
 
 - ###### Common Flags
 
- - '--credentials' IaaS credentials
- - '--backend' Vagrant
- - '--authorized-users' authorized_keys file.
+ - `--credentials` IaaS credentials
+ - `--vm-backend` Vagrant
+ - `--container-backend` default is Docker
+ - `--store-backend` default is SQLite.
+ - `--authorized-users` authorized_keys file.
 - `add` the `Address` to the stored list of addresses.
  - `name` the `Address` to `add`.
 - `remove` or `rm` the `Address` from the stored list of addresses.
@@ -61,6 +66,7 @@ All commands can take the following flags
 - `deploy` e.g. `build`, `copy`, and `start` the new version. `verify` the new
   version tell the other versions to `shutdown`
  - `--commit-hash` deploy a specific `git` hash.
+ - `--rollout PERCENT` Deploys to PERCENTAGE of the cluster
 - `rollback` revert the last deploy and start the old version.
 - `repair` Attempt to bring the cluster to a healthy state by killing the `Node`s that fail verification, and recopying the `Executable` and `restart`ing
  - `--full-copy` Do a full copy of the executable.
@@ -68,18 +74,3 @@ All commands can take the following flags
 - `gc` collect old versions
  - `count` keep this number
  - `older` a relative or absolute date.
-
-##### Optional Cache Management
-Executables are cached to speed up delivery. Unless there is a bug caching commands are not needed
-- `cache` commands all take the `--address` flag.
- - `flush` clear the cache.
- - `put` add to cache.
- - `get` get from the cache.
- - `diff` compare the cache to local src and artifacts. See what is different.
- - `update` make the cache have the new stuff.
- - `repair` make the cache look like the local would be if built from scratch.
- - `persist` send the data to the address.
-   - `--s3-bucket` persist the cache to the S3 bucket.  
- - `gc` remove the old stuff.
-   - `count` keep this number
-   - `older` a relative or absolute date.
