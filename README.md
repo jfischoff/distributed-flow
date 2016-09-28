@@ -1,12 +1,15 @@
 # About
 
-`distributive-flow` or `dflow` for short is a simple method for zero-downtime deployment of socket based `Haskell` applications.
+`distributive-flow`, or `dflow` for short, is a simple method for zero-downtime deployment of socket based `Haskell` applications.
 
-`dflow` is manages multiple versions of the same executable on a clusters of machines.
+`dflow` manages multiple versions of the same `Executable` on a clusters of `Node`s.
 
-`dflow` is configured with an `Image`, `[PublicKey]`. Additionally it is parameterized over a data store, vm provider and containerizer backends.
-
-`dflow` maintains a store of an `[Address]` and `(Map String Address)` or `Node`s is deploy to.
+`dflow` is parameterized over the following variables.
+- `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
+- `PublicKeys` is also an opaque.
+- `VMBackend` provides the function `Image -> Node`
+- `ContainerBackend` provides the `Executable -> Container`
+- `Store` is define by the interface
 
 `dflow` is "agent less" in the sense it relies on `sshd`. `dflow` assumes client applications respond to the following signals
 
@@ -18,30 +21,17 @@ How does `dflow` handle registering a new process with the process watcher?
 
 # Commands
 
+### Common Flags
+- `--vm-backend` Vagrant
+- `--container-backend` default is Docker
+- `--store-backend` default is a json file.
+- `--keys` authorized_keys file.
+
 ### Provisioning
-`dflow` can provision a `Node` for an `Executable` for a given backend using an Image. It cannot install any software or dependencies.
-
-Container plugins handle dependency management and can
-```haskell
-containerize :: Executable -> Container
-```
-
-- ###### Common Flags
-
- - `--credentials` IaaS credentials
- - `--vm-backend` Vagrant
- - `--container-backend` default is Docker
- - `--store-backend` default is SQLite.
- - `--authorized-users` authorized_keys file.
-- `add` the `Address` to the stored list of addresses.
- - `name` the `Address` to `add`.
-- `remove` or `rm` the `Address` from the stored list of addresses.
- - `name` the `Address` to `rm`.
-- `list` or `ls`
- - `nodes` the unnamed `[Address]` and  the named `Map String Address`
-  - `unnamed` are only shown in the order they were added
-  - `name` are only shown in the order they were added
- - `versions` the versions of the `Executable`
+- `add NAME` provision a `Node` named `NAME`.
+- `remove NAME` the `Node` named `NAME`.
+- `cycle` recreate the `Node`.
+- `list` will list all the `Node`s.
 
 ##### Context
 - `with` push the `Address` on top of the context stack. The context defaults to all `Node`s
@@ -50,7 +40,7 @@ containerize :: Executable -> Container
 
 All commands can take the following flags
 - Common flags
- - `--address`  is the `Address` or `Name` of a `Node`.
+ - `--name`  is the name of a `Node`.
 - `start` the `Executable` list in the *df.yaml* file.
 - `stop`  the current version of `Executable`.
   - `--all` stop every version of the `Executable`.
