@@ -1,10 +1,10 @@
 # About
 
-`distributive-flow`, or `dflow` for short, is a simple method for zero-downtime deployment of socket based `Haskell` applications.
+`distributive-flow`, or `dflow` for short, is a simple method for zero-downtime deployment of `Haskell` applications.
 
 `dflow` manages multiple versions of the same `Executable` on a clusters of `Node`s.
 
-`dflow` is parameterized over the following variables.
+`dflow` is parameterized with following options.
 - `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
 - `PublicKeys` is also an opaque.
 - `VMBackend` provides the function `Image -> Node`
@@ -46,8 +46,7 @@ All commands can take the following flags
 - `restart` the service by `stop`ping and `start`ing.
 - `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
 - `verify` the current version using the verification target in the *df.yaml* file.
-- `cp` the Executable the `Node`s of given by the `Context`
- - `--full` A full copy, not the optimized diff.
+- `cp` the Executable the `Node`s
  - `--version` Specify a version. Default is the latest.
  - `--through-cache` Force the value through the cache and update on the `Node`.
 - `build` the executable.
@@ -56,9 +55,8 @@ All commands can take the following flags
  - `--commit-hash` deploy a specific `git` hash.
  - `--rollout PERCENT` Deploys to PERCENTAGE of the cluster
 - `rollback` revert the last deploy and start the old version.
-- `repair` Attempt to bring the cluster to a healthy state by killing the `Node`s that fail verification, and recopying the `Executable` and `restart`ing
- - `--full-copy` Do a full copy of the executable.
- - `--watch`
+- `repair` Attempt to bring the cluster to a healthy state by killing the `Node`s that fail verification, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
+ - `--watch` continuously watch the cluster and repair it if something is wrong.
 - `gc` collect old versions
  - `count` keep this number
  - `older` a relative or absolute date.
