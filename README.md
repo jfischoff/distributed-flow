@@ -32,6 +32,7 @@ How does `dflow` handle registering a new process with the process watcher?
 - `remove NAME` the `Node` named `NAME`.
 - `cycle` recreate the `Node`.
 - `list` will list all the `Node`s.
+- `chaos-monkey` randomly destroy `Node`s.
 
 ##### Context
 - `with` push the `Address` on top of the context stack. The context defaults to all `Node`s
