@@ -11,7 +11,7 @@
 - `ContainerBackend` provides the `Executable -> Container`
 - `Store` which implements this interface
 ```haskell
-class IStore m where
+class MStore m where
   load   :: m Store
   save   :: Store -> m ()
 
