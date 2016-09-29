@@ -28,25 +28,25 @@ How does `dflow` handle registering a new process with the process watcher?
 - `--keys` authorized_keys file.
 
 ### Provisioning
-- `add NAME` provision a `Node` named `NAME`.
-- `remove NAME` the `Node` named `NAME`.
-- `cycle NAME` recreate the `NAME` `Node`.
-- `list` will list all the `Node`s.
+- `set COUNT` where `COUNT` is the number of `Node`.
+- `get` the `COUNT`
+- `cycle Index` recreate the `Index` `Node`.
+- `list` will list all the `Node`s and their `Index`.
 - `chaos-monkey` randomly destroy `Node`s.
 
 ### Executable Management
 
 All commands can take the following flags
 - Common flags
- - `--name`  is the name of a `Node`.
-- `start` the `Executable` list in the *df.yaml* file.
+ - `--index`  is the `Index` of a `Node`.
+- `start` the `Executable` list in the *dflow.yaml* file.
 - `stop`  the current version of `Executable`.
   - `--all` stop every version of the `Executable`.
   - `--now` as in immediantly.
 - `restart` the service by `stop`ping and `start`ing.
 - `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
-- `verify` the current version using the verification target in the *df.yaml* file.
-- `cp` the Executable the `Node`s
+- `verify` the current version using the verification target in the *dflow.yaml* file.
+- `copy` the Executable the `Node`s
  - `--version` Specify a version. Default is the latest.
  - `--through-cache` Force the value through the cache and update on the `Node`.
 - `build` the executable.
