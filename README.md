@@ -40,17 +40,23 @@ How does `dflow` handle registering a new process with the process watcher?
 All commands can take the following flags
 ##### Common flags
 - `--index`  is the `Index` of a `Node`.
+
 #### Process
+
 - `start` the `Executable` list in the *dflow.yaml* file.
 - `stop`  the current version of `Executable`.
   - `--all` stop every version of the `Executable`.
   - `--now` as in immediantly.
 - `restart` the service by `stop`ping and `start`ing.
 - `versions` get the `git` hashes of the `Executable` processes
+
 #### Verification
+
 - `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
 - `verify` the current version using the verification target in the *dflow.yaml* file.
+
 #### Deployment
+
 - `build` the `Executable`.
 - `copy` the `Executable` the `Node`s
  - `--version` Specify a version. Default is the latest.
