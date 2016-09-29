@@ -9,31 +9,32 @@
 - `PublicKeys` is also an opaque.
 - `VMBackend` provides the function `Image -> Node`
 - `ContainerBackend` provides the `Executable -> Container`
-- `Store` is define by the interface
+- `Store` which implements this interface
+```haskell
+class Store a where
+  load   :: IO a
+  save   :: a -> IO ()
 
-`dflow` is "agent less" in the sense it relies on `sshd`. `dflow` assumes client applications respond to the following signals
-
-- `SIGINT`  informs the `Executable` to begin graceful shutdown.
-- `SIGTERM`  informs the `Executable` to shutdown immediantly.
-
-# TODO Process watcher
-How does `dflow` handle registering a new process with the process watcher?
+  add    :: Node         -> Transaction Int
+  remove :: Int  -> Node -> Transaction ()
+```
 
 # Commands
 
 ### Common Flags
 - `--vm-backend` Vagrant
-- `--container-backend` default is Docker
+- `--container-backend` default is `nspawn`
 - `--store-backend` default is a json file.
 - `--keys` authorized_keys file.
 
 ### Provisioning
-- `set COUNT` where `COUNT` is the number of `Node`.
+- `set COUNT` where `COUNT` is the number of `Node`s.
 - `get` the `COUNT`
 - `cycle Index` recreate the `Index` `Node`.
 - `list` will list all the `Node`s and their `Index`.
 - `outplace Index` remove a `Node`.
 - `chaos-monkey` randomly destroy `Node`s.
+ - `--rampage` continuously release the `chaos-monkey`
 
 ### Management
 
@@ -50,15 +51,22 @@ All commands can take the following flags
 - `restart` the service by `stop`ping and `start`ing.
 - `versions` get the `git` hashes of the `Executable` processes
 
-#### Verification
+#### Health
 
 - `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
-- `verify` the current version using the verification target in the *dflow.yaml* file.
+- `health` Show statistics of the `health` portion of `verify`'s result.
+- `repair` Attempt to bring the cluster to a healthy state by destroying the `Node`s that fail `verify`, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
+ - `--watch` continuously watch the cluster and repair it if something is wrong.
+- `verify` the a `Node` using the source file in the `dflow.yaml`. `verify` relies on a function that produces a health value and a threshold.
+```haskell
+verify :: Node -> ({- health -} Double, {- threshold -} Double)
+```
+  - `--watch` continuously monitor the cluster.
 
 #### Deployment
 
 - `build` the `Executable`.
-- `copy` the `Executable` the `Node`s
+- `copy` the `Executable` to the `Node`s
  - `--version` Specify a version. Default is the latest.
  - `--latest` copy the latest.
  - `--through-cache` Force the value through the cache and update on the `Node`s.
@@ -66,11 +74,7 @@ All commands can take the following flags
  - `--commit-hash` deploy a specific `git` hash.
  - `--rollout PERCENT` Deploys to PERCENT of the cluster.
 - `rollback` revert the last deploy and start the old version. Calling rollback twice goes back two versions(should this require a flag?).
-
-#### Chaos Monkey
-
-- `repair` Attempt to bring the cluster to a healthy state by destroying `Node` the `Node`s that fail `verify`, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
- - `--watch` continuously watch the cluster and repair it if something is wrong.
+  - `--version` pass in the `git` hash.
 
 #### Other
 
