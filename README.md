@@ -25,7 +25,7 @@ class MStore m where
 ### Provisioning
 - `set COUNT` where `COUNT` is the number of `Node`s.
 - `get` the `COUNT`
-- `cycle Index` recreate the `Index` `Node`.
+- `cycle Index` recreate the `Node` at `Index`.
 - `list` will list all the `Node`s and their `Index`.
 - `outplace Index` remove a `Node`.
 - `chaos-monkey` randomly destroy `Node`s.
