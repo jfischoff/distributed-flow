@@ -12,8 +12,8 @@
 - `Store` which implements this interface
 ```haskell
 class Store a where
-  load   :: IO a
-  save   :: a -> IO ()
+  load   :: Transaction a
+  save   :: a -> Transaction ()
 
   add    :: Node         -> Transaction Int
   remove :: Int  -> Node -> Transaction ()
