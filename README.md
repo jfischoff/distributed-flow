@@ -11,12 +11,12 @@
 - `ContainerBackend` provides the `Executable -> Container`
 - `Store` which implements this interface
 ```haskell
-class Store a where
-  load   :: Transaction a
-  save   :: a -> Transaction ()
+class IStore m where
+  load   :: m Store
+  save   :: Store -> m ()
 
-  add    :: Node         -> Transaction Int
-  remove :: Int  -> Node -> Transaction ()
+  add    :: Node         -> m Int
+  remove :: Int  -> Node -> m ()
 ```
 
 # Commands
