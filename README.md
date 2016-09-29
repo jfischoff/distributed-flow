@@ -66,8 +66,14 @@ All commands can take the following flags
  - `--commit-hash` deploy a specific `git` hash.
  - `--rollout PERCENT` Deploys to PERCENT of the cluster.
 - `rollback` revert the last deploy and start the old version. Calling rollback twice goes back two versions(should this require a flag?).
+
+#### Chaos Monkey
+
 - `repair` Attempt to bring the cluster to a healthy state by destroying `Node` the `Node`s that fail `verify`, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
  - `--watch` continuously watch the cluster and repair it if something is wrong.
+
+#### Other
+
 - `gc` collect old versions
  - `count` keep this number
  - `older` a relative or absolute date.
