@@ -52,7 +52,7 @@ All commands can take the following flags
 - `health` Show statistics of the `health` portion of `verify`'s result.
 - `repair` Attempt to bring the cluster to a healthy state by destroying the `Node`s that fail `verify`, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
  - `--watch` continuously watch the cluster and repair it if something is wrong.
-- `verify` the a `Node` using the source file in the `dflow.yaml`. `verify` relies on a function that produces a health value and a threshold.
+- `verify` a `Node` using the source file specified in the `dflow.yaml`. `verify` relies on a function that produces a health value and a threshold.
 ```haskell
 verify :: Node -> ({- health -} Double, {- threshold -} Double)
 ```
