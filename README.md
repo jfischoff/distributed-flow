@@ -6,11 +6,11 @@
 
 # Commands
 ### Common Flags
-- `--image` Default: `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
-- `--vm-backend` Default: `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
-- `--container-backend` Default: `nspawn`.
+- `--image` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
+- `--vm-backend` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
+- `--container-backend` e.g.`docker`.
   `ContainerBackend` provides the `Executable -> Container`
-- `--store` Default : `json`. `Store`s implement
+- `--store` e.g.`etcd`. `Store`s implement
 ```haskell
 class MStore m where
     type StoreHandle
