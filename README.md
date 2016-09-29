@@ -22,6 +22,7 @@ class MStore m where
 # Commands
 
 ### Common Flags
+- `--image` Ubuntu
 - `--vm-backend` Vagrant
 - `--container-backend` default is `nspawn`
 - `--store` default is a json file.
