@@ -44,10 +44,10 @@ All commands can take the following flags
 
 #### Process
 
-- `start` the `Executable` list in the *dflow.yaml* file.
+- `start` the `Executable` listed in the *dflow.yaml* file.
 - `stop`  the current version of `Executable`.
   - `--all` stop every version of the `Executable`.
-  - `--now` as in immediantly.
+  - `--now` as in immediately.
 - `restart` the service by `stop`ping and `start`ing.
 - `versions` get the `git` hashes of the `Executable` processes
 
@@ -73,6 +73,8 @@ verify :: Node -> ({- health -} Double, {- threshold -} Double)
 - `deploy` e.g. `build`, `copy`, and `start` the new version. `verify` the new version and then tell the other versions to `shutdown`.
  - `--commit-hash` deploy a specific `git` hash.
  - `--rollout PERCENT` Deploys to PERCENT of the cluster.
+ - `--rolling-timed` time for a rolling deploy.
+ - `--auto-rollout Tolerance` rollback automatically if the health decrease more than `Tolerance`.
 - `rollback` revert the last deploy and start the old version. Calling rollback twice goes back two versions(should this require a flag?).
   - `--version` pass in the `git` hash.
 
