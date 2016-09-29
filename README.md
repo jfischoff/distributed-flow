@@ -70,7 +70,7 @@ verify :: Node -> ({- health -} Double, {- threshold -} Double)
  - `--rollout PERCENT` Deploys to PERCENT of the cluster.
  - `--rolling-timed` time for a rolling deploy.
  - `--auto-rollout Tolerance` rollback automatically if the health decrease more than `Tolerance`.
-- `rollback` revert the last deploy and start the old version. Calling rollback twice goes back two versions(should this require a flag?).
+- `rollback` revert the last deploy and start the old version. This can be called multiple times to go further back in history.
   - `--version` pass in the `git` hash.
 
 #### Other
