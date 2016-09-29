@@ -60,3 +60,4 @@ All commands can take the following flags
 - `gc` collect old versions
  - `count` keep this number
  - `older` a relative or absolute date.
+- `version` get the `git` hash of the `Executable`
