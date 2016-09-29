@@ -3,30 +3,28 @@
 `distributive-flow`, or `dflow` for short, is a simple method for zero-downtime deployment of `Haskell` applications.
 
 `dflow` manages multiple versions of the same `Executable` on a clusters of `Node`s.
+# Commands
+### Common Flags
+- `--image` Default: `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
 
-`dflow` is parameterized with following options.
-- `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
-- `Keys` is also an opaque.
-- `VMBackend` provides the function `Image -> Node`
-- `ContainerBackend` provides the `Executable -> Container`
-- `Store` which implements this interface
+- `--vm-backend` Default: `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
+
+- `--container-backend` Default: `nspawn`.
+  `ContainerBackend` provides the `Executable -> Container`
+
+- `--store` Default : `json`. `Store`s implement
 ```haskell
 class MStore m where
-  load   :: m Store
-  save   :: Store -> m ()
+    type StoreHandle
+    load   :: m (StoreHandle m)
+    save   :: StoreHandle m -> m ()
 
-  add    :: Node         -> m Int
-  remove :: Int  -> Node -> m ()
+    add    :: Node         -> m Int
+    remove :: Int  -> Node -> m ()
 ```
 
-# Commands
-
-### Common Flags
-- `--image` Ubuntu
-- `--vm-backend` Vagrant
-- `--container-backend` default is `nspawn`
-- `--store` default is a json file.
-- `--keys` authorized_keys file.
+- `--keys` authorized_keys file. `Keys` are opaque but used by the
+`VMBackend`.
 
 ### Provisioning
 - `set COUNT` where `COUNT` is the number of `Node`s.
