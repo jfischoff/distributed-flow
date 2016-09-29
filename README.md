@@ -3,6 +3,7 @@
 `distributive-flow`, or `dflow` for short, is a simple method for zero-downtime deployment of `Haskell` applications.
 
 `dflow` manages multiple versions of the same `Executable` on a clusters of `Node`s.
+
 # Commands
 ### Common Flags
 - `--image` Default: `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
@@ -27,9 +28,9 @@ class MStore m where
 - `get` the `COUNT`
 - `cycle Index` recreate the `Node` at `Index`.
 - `list` will list all the `Node`s and their `Index`.
-- `outplace Index` remove a `Node`.
+- `destroy Index` remove a `Node`.
 - `chaos-monkey` randomly destroy `Node`s.
- - `--rampage` continuously release the `chaos-monkey`
+ - `--rampage Interval` continuously destroy `Node`s at the given `Interval`.
 
 ### Management
 
