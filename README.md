@@ -6,7 +6,7 @@
 
 `dflow` is parameterized with following options.
 - `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
-- `PublicKeys` is also an opaque.
+- `Keys` is also an opaque.
 - `VMBackend` provides the function `Image -> Node`
 - `ContainerBackend` provides the `Executable -> Container`
 - `Store` which implements this interface
@@ -24,7 +24,7 @@ class MStore m where
 ### Common Flags
 - `--vm-backend` Vagrant
 - `--container-backend` default is `nspawn`
-- `--store-backend` default is a json file.
+- `--store` default is a json file.
 - `--keys` authorized_keys file.
 
 ### Provisioning
