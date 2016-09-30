@@ -28,14 +28,8 @@ type Target = OneOrMoreOf Executable Library Source
     start :: Container m -> Node -> m (Process m)
     stop  :: Process m -> m ()
   ```
-  - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where
-
-  ```haskell
-  type Target     = OneOrMoreOf Executable     Library     Source
-  type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
-  ```
+  - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where `Target` is opaque.
   - `--package-reader PATH` Parse a `TargetDesc`
-
   - `--store PATH` e.g.`etcd`. `Store`s implement
   ```haskell
   class MStore m where
