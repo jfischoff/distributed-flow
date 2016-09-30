@@ -27,6 +27,7 @@ type Target = OneOrMoreOf Executable Library Source
     stop  :: Process m -> m ()
   ```
   - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where
+
   ```haskell
   type Target     = OneOrMoreOf Executable     Library     Source
   type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
