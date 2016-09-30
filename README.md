@@ -65,11 +65,13 @@ All commands can take the following flags
 
 #### Health
 
-- `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
-- `health` Show statistics of the `health` portion of `verify`'s result.
+- `compare-checksums` compare the checksums of the current version of the `Target` with what is on the nodes.
+- `health` Returns the health amount, e.g. the first part of `verify`'s result.
+  - `--stats` Show statistics of the `health` portion of `verify`'s result.
 - `repair` Attempt to bring the cluster to a healthy state by destroying the `Node`s that fail `verify`, and recopying the `Target` and `restart`ing. Additionally repair will create `Node`s that are missing.
  - `--watch` continuously watch the cluster and repair it if something is wrong.
-- `verify` a `Node` using the source file specified in the `dflow.yaml`. `verify` relies on a function that produces a health value and a threshold. `verify :: Node -> ({- health -} Double, {- threshold -} Double)`
+- `verify` a `Node` using the a `verify` function defined in the `Target`. `verify` is a function that produces a health value and a threshold. `verify :: Node -> ({- health -} Double, {- threshold -} Double)`. If the value surpasses the thresold the `Node` is unhealthy.
+  - `--thresold` see just the thresold of verify.
   - `--watch` continuously monitor the cluster.
 
 #### Deployment
