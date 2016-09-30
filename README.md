@@ -4,11 +4,7 @@
 
 `dflow` manages multiple versions of the same `Target`'s `Process`es on a clusters of `Node`s.
 
-`dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source.
-
-```haskell
-type Target = OneOrMoreOf Executable Library Source
-```
+`dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source ... or something else. It is an opaque type from `dflow`'s perspective.
 
 # Commands
 ### Common Flags
