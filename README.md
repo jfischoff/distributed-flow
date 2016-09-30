@@ -12,29 +12,29 @@ type Target = OneOrMoreOf Executable Library Source
 
 # Commands
 ### Common Flags
-- `--image IMAGE_PATH` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
-- `--vm-backend VMBACKEND_PATH` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
-- `--container-backend CONTAINER_BACKEND_PATH` e.g.`docker`.
+- #### Plugins
+  - `--image PATH` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
+  - `--vm-backend PATH` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
+  - `--container-backend PATH` e.g.`docker`.
   `ContainerBackend` provides the interface
-- `--builder BUILDER_PATH` Build the `Target` essentially `TargetDesc -> Target` where
+  ```haskell
+  class ContainerBackend m where
+    type Container m  
+    type Process m
+    containerize :: Target -> m (Container m)
+
+    start :: Container m -> Node -> m (Process m)
+    stop  :: Process m -> m ()
+  ```
+  - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where
 ```haskell
 type Target     = OneOrMoreOf Executable     Library     Source
 type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
 ```
-- `--package-reader PACKAGE_READER_PATH` Parse a `TargetDesc`
+  - `--package-reader PATH` Parse a `TargetDesc`
 
-```haskell
-class ContainerBackend m where
-  type Container m  
-  type Process m
-  containerize :: Target -> m (Container m)
-
-  start :: Container m -> Node -> m (Process m)
-  stop  :: Process m -> m ()
-```
-
-- `--store` e.g.`etcd`. `Store`s implement
-```haskell
+  - `--store PATH` e.g.`etcd`. `Store`s implement
+  ```haskell
 class MStore m where
     type StoreHandle m
     load   :: m (StoreHandle m)
@@ -43,7 +43,7 @@ class MStore m where
     add    :: Node         -> m Int
     remove :: Int  -> Node -> m ()
 ```
-- `--keys` authorized_keys file. `Keys` are opaque but used by the
+  - `--keys PATH` authorized_keys file. `Keys` are opaque but used by the
 `VMBackend`.
 
 ### Provisioning
