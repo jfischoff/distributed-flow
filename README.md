@@ -16,6 +16,12 @@ type Target = OneOrMoreOf Executable Library Source
 - `--vm-backend` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
 - `--container-backend` e.g.`docker`.
   `ContainerBackend` provides the interface 
+- `--builder` Build the `Target` essentially `TargetDesc -> Target` where
+```haskell
+type Target     = OneOrMoreOf Executable     Library     Source
+type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
+```
+- `--package-reader` Parse a `TargetDesc`
 
 ```haskell 
 class ContainerBackend m where
