@@ -60,26 +60,26 @@ All commands can take the following flags
 
 #### Process
 
-- `start` the `Executable` listed in the *dflow.yaml* file.
-- `stop`  the current version of `Executable`.
-  - `--all` stop every version of the `Executable`.
+- `start` the `Target` listed in the *dflow.yaml* file.
+- `stop`  the current version of `Target`.
+  - `--all` stop every version of the `Target`.
   - `--now` as in immediately.
 - `restart` the service by `stop`ping and `start`ing.
-- `versions` get the `git` hashes of the `Executable` processes
+- `versions` get the `git` hashes of the `Target` processes
 
 #### Health
 
 - `compare-checksums` compare the checksums of the current version of the `Executable` with what is on the nodes.
 - `health` Show statistics of the `health` portion of `verify`'s result.
-- `repair` Attempt to bring the cluster to a healthy state by destroying the `Node`s that fail `verify`, and recopying the `Executable` and `restart`ing. Additionally repair will create `Node`s that are missing.
+- `repair` Attempt to bring the cluster to a healthy state by destroying the `Node`s that fail `verify`, and recopying the `Target` and `restart`ing. Additionally repair will create `Node`s that are missing.
  - `--watch` continuously watch the cluster and repair it if something is wrong.
 - `verify` a `Node` using the source file specified in the `dflow.yaml`. `verify` relies on a function that produces a health value and a threshold. `verify :: Node -> ({- health -} Double, {- threshold -} Double)`
   - `--watch` continuously monitor the cluster.
 
 #### Deployment
 
-- `build` the `Executable`. This should include any tests.
-- `copy` the `Executable` to the `Node`s
+- `build` the `Target`. This should include any tests.
+- `copy` the `Target` to the `Node`s
  - `--version` Specify a version. Default is the latest.
  - `--latest` copy the latest.
  - `--through-cache` Force the value through the cache and update on the `Node`s.
