@@ -27,22 +27,22 @@ type Target = OneOrMoreOf Executable Library Source
     stop  :: Process m -> m ()
   ```
   - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where
-```haskell
-type Target     = OneOrMoreOf Executable     Library     Source
-type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
-```
+  ```haskell
+  type Target     = OneOrMoreOf Executable     Library     Source
+  type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
+  ```
   - `--package-reader PATH` Parse a `TargetDesc`
 
   - `--store PATH` e.g.`etcd`. `Store`s implement
   ```haskell
-class MStore m where
-    type StoreHandle m
-    load   :: m (StoreHandle m)
-    save   :: StoreHandle m -> m ()
+  class MStore m where
+      type StoreHandle m
+      load   :: m (StoreHandle m)
+      save   :: StoreHandle m -> m ()
 
-    add    :: Node         -> m Int
-    remove :: Int  -> Node -> m ()
-```
+      add    :: Node         -> m Int
+      remove :: Int  -> Node -> m ()
+  ```
   - `--keys PATH` authorized_keys file. `Keys` are opaque but used by the
 `VMBackend`.
 
