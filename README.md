@@ -4,7 +4,7 @@
 
 `dflow` manages multiple versions of the same `Target`'s `Process`es on a clusters of `Node`s.
 
-`dflow` reads the cabal file, and by convention looks for an executable named the same as the library. The `dflow` backends can deploy one or more of a executable, a library and source. 
+`dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source. 
 
 ```haskell
 type Target = OneOrMoreOf Executable Library Source
@@ -15,7 +15,7 @@ type Target = OneOrMoreOf Executable Library Source
 - `--image` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
 - `--vm-backend` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
 - `--container-backend` e.g.`docker`.
-  `ContainerBackend` provides the interface 
+  `ContainerBackend` provides the interface
 - `--builder` Build the `Target` essentially `TargetDesc -> Target` where
 ```haskell
 type Target     = OneOrMoreOf Executable     Library     Source
@@ -23,12 +23,12 @@ type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
 ```
 - `--package-reader` Parse a `TargetDesc`
 
-```haskell 
+```haskell
 class ContainerBackend m where
   type Container m  
   type Process m
   containerize :: Target -> m (Container m)
-  
+
   start :: Container m -> Node -> m (Process m)
   stop  :: Process m -> m ()
 ```
