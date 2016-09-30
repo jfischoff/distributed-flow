@@ -4,7 +4,7 @@
 
 `dflow` manages multiple versions of the same `Target`'s `Process`es on a clusters of `Node`s.
 
-`dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source. 
+`dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source.
 
 ```haskell
 type Target = OneOrMoreOf Executable Library Source
@@ -12,16 +12,16 @@ type Target = OneOrMoreOf Executable Library Source
 
 # Commands
 ### Common Flags
-- `--image` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
-- `--vm-backend` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
-- `--container-backend` e.g.`docker`.
+- `--image IMAGE_PATH` e.g. `ubuntu`. `Image` is an opaque handle. It cannot be inspected. It is passed to the `VMBackend`.
+- `--vm-backend VMBACKEND_PATH` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
+- `--container-backend CONTAINER_BACKEND_PATH` e.g.`docker`.
   `ContainerBackend` provides the interface
-- `--builder` Build the `Target` essentially `TargetDesc -> Target` where
+- `--builder BUILDER_PATH` Build the `Target` essentially `TargetDesc -> Target` where
 ```haskell
 type Target     = OneOrMoreOf Executable     Library     Source
 type TargetDesc = OneOrMoreOf ExecutableDesc LibraryDesc SourceDesc
 ```
-- `--package-reader` Parse a `TargetDesc`
+- `--package-reader PACKAGE_READER_PATH` Parse a `TargetDesc`
 
 ```haskell
 class ContainerBackend m where
