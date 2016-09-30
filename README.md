@@ -9,7 +9,7 @@
 # Commands
 ### Common Flags
 
-- `--image PATH` e.g. `ubuntu-trusty`. `Image` is an opaque handle. It cannot  be inspected. It is passed to the `VMBackend`.
+- `--image PATH` e.g. `ubuntu-trusty`. `Image` is an opaque handle from `dflow`'s perspective. `dflow` passes it to the `VMBackend`.
 - #### Plugins
 
   - `--vm-backend PATH` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
