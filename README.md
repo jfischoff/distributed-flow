@@ -42,6 +42,7 @@
 ### Provisioning
 - `set COUNT` where `COUNT` is the number of `Node`s.
 - `get` the `COUNT`
+- `address Index` get the address of the `Node` at Index.
 - `cycle Index` recreate the `Node` at `Index`.
 - `list` will list all the `Node`s and their `Index`.
 - `destroy Index` remove a `Node`.
