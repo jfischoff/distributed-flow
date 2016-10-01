@@ -12,7 +12,7 @@
 - `--image PATH` e.g. `ubuntu-trusty`. `Image` is an opaque handle from `dflow`'s perspective. `dflow` passes it to the `VMBackend`.
 - #### Plugins
 
-  - `--vm-backend PATH` e.g. `vagrant`. `VMBackend` provides the function `Image -> Keys -> Node`
+  - `--vm-backend PATH` e.g. `vagrant` or `aws`. `VMBackend` provides the function `Image -> Keys -> Node`
   - `--container-backend PATH` e.g.`docker`.
   `ContainerBackend` provides the interface
   ```haskell
