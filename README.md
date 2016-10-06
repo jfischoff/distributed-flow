@@ -29,12 +29,12 @@ line. They can also be `install`ed explicitly and `uninstalled`
 
 ### Common Flags
 
-- `--image STRING` e.g. `ubuntu-trusty`. The value is not interpreted by `dlow`
+- `--image PATH_OR_ID` e.g. `ubuntu-trusty`. The value is not interpreted by `dlow`
   it is passed to the `loadImage` function of the `VMPlugin`.
 
 - #### Plugins
 
-  - `--vm PATH` e.g. `vagrant` or `aws`. `VMPlugin` provides the interface
+  - `--vm PATH_OR_ID` e.g. `vagrant` or `aws`. `VMPlugin` provides the interface
     ```haskell
     class ( NodeInterface (Node m)
           , ImageInterface (Image m)
@@ -53,7 +53,7 @@ line. They can also be `install`ed explicitly and `uninstalled`
       imageIdentifier :: i -> String
     ```
 
-  - `--container PATH` e.g.`docker`. `ContainerPlugin` provides the interface
+  - `--container PATH_OR_ID` e.g.`docker`. `ContainerPlugin` provides the interface
     ```haskell
     class ContainerPlugin m where
       type Container m  
@@ -63,9 +63,9 @@ line. They can also be `install`ed explicitly and `uninstalled`
       start :: Container m -> Node -> m (Process m)
       stop  :: Process m -> m ()
     ```
-  - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where `Target` is opaque.
-  - `--package PATH` Parse a `TargetDesc`
-  - `--store PATH` e.g.`etcd` or a JSON file. `Store`s implement
+  - `--builder PATH_OR_ID` Build the `Target` essentially `TargetDesc -> Target` where `Target` is opaque.
+  - `--package PATH_OR_ID` Parse a `TargetDesc`
+  - `--store PATH_OR_ID` e.g.`etcd` or a JSON file. `Store`s implement
   ```haskell
   class Store m where
       type StoreHandle m
