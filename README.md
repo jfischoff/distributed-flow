@@ -66,15 +66,15 @@ line. They can also be `install`ed explicitly and `uninstalled`
   - `--builder PATH_OR_ID` Build the `Target` essentially `TargetDesc -> Target` where `Target` is opaque.
   - `--package PATH_OR_ID` Parse a `TargetDesc`
   - `--store PATH_OR_ID` e.g.`etcd` or a JSON file. `Store`s implement
-  ```haskell
-  class Store m where
-      type StoreHandle m
-      load   :: m (StoreHandle m)
-      save   :: StoreHandle m -> m ()
+    ```haskell
+    class Store m where
+        type StoreHandle m
+        load   :: m (StoreHandle m)
+        save   :: StoreHandle m -> m ()
 
-      add    :: Node         -> m Int
-      remove :: Int  -> Node -> m ()
-  ```
+        add    :: Node         -> m Int
+        remove :: Int  -> Node -> m ()
+    ```
   - `--keys PATH` authorized_keys file. `Keys` are opaque but used by the
 `VM`.
 
