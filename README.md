@@ -7,28 +7,67 @@
 `dflow` reads a package file and produces a `Target`. The `dflow` backends can deploy one or more of a executable, a library and source ... or something else. It is an opaque type from `dflow`'s perspective.
 
 # Commands
+
+### Plugins
+
+Plugins are installed automatically when listed in config or set on the command
+line. They can also be `install`ed explicitly and `uninstalled`
+ - `plugin` this is the top level plugin command. The subcommands do the work.
+   - `install Identifier`
+   - `uninstall Identifier`
+   - `list PATTERN`
+     - `--vm` Filter to just `VMPlugin`s.
+     - `--container` Filter to just `ContainerPlugin`s.
+     - `--builder` Filter to just builder plugins.
+     - `--package` Filter to just package plugins.
+     - `--store` Filter to just `Store` plugins.
+
+### Images
+  - `image`
+    - `list PATTERN` list `Image`s. This functionality is provided by
+    the `VMPlugin`'s `listImages` method.
+
 ### Common Flags
 
-- `--image PATH` e.g. `ubuntu-trusty`. `Image` is an opaque handle from `dflow`'s perspective. `dflow` passes it to the `VMBackend`.
+- `--image STRING` e.g. `ubuntu-trusty`. The value is not interpreted by `dlow`
+  it is passed to the `loadImage` function of the `VMPlugin`.
+
 - #### Plugins
 
-  - `--vm-backend PATH` e.g. `vagrant` or `aws`. `VMBackend` provides the function `Image -> Keys -> Node`
-  - `--container-backend PATH` e.g.`docker`.
-  `ContainerBackend` provides the interface
-  ```haskell
-  class ContainerBackend m where
-    type Container m  
-    type Process m
-    containerize :: Target -> m (Container m)
+  - `--vm PATH` e.g. `vagrant` or `aws`. `VMPlugin` provides the interface
+    ```haskell
+    class ( NodeInterface (Node m)
+          , ImageInterface (Image m)
+          ) => VMPlugin m where
+      type Node m
+      type Image m
+      loadImage        :: String -> m (Image m)
+      listImages       :: Cursor (Image m) -> m (Cursor (Image m))
+      create           :: Image m -> Keys -> m (Node m)
+      createFromString :: String -> Keys -> m (Node m)
 
-    start :: Container m -> Node -> m (Process m)
-    stop  :: Process m -> m ()
-  ```
+    class NodeInterface n where
+      address :: n -> Address
+
+    class ImageInterface i where
+      imageIdentifier :: i -> String
+    ```
+
+  - `--container PATH` e.g.`docker`. `ContainerPlugin` provides the interface
+    ```haskell
+    class ContainerPlugin m where
+      type Container m  
+      type Process m
+      containerize :: Target -> m (Container m)
+
+      start :: Container m -> Node -> m (Process m)
+      stop  :: Process m -> m ()
+    ```
   - `--builder PATH` Build the `Target` essentially `TargetDesc -> Target` where `Target` is opaque.
-  - `--package-reader PATH` Parse a `TargetDesc`
-  - `--store PATH` e.g.`etcd`. `Store`s implement
+  - `--package PATH` Parse a `TargetDesc`
+  - `--store PATH` e.g.`etcd` or a JSON file. `Store`s implement
   ```haskell
-  class MStore m where
+  class Store m where
       type StoreHandle m
       load   :: m (StoreHandle m)
       save   :: StoreHandle m -> m ()
@@ -37,7 +76,7 @@
       remove :: Int  -> Node -> m ()
   ```
   - `--keys PATH` authorized_keys file. `Keys` are opaque but used by the
-`VMBackend`.
+`VM`.
 
 ### Provisioning
 - `set COUNT` where `COUNT` is the number of `Node`s.
@@ -96,3 +135,15 @@ All commands can take the following flags
 - `gc` collect old versions
  - `count` keep this number
  - `older` a relative or absolute date.
+
+# Config File
+```yaml
+image:            PATH_OR_ID
+vm-plugin:        PATH_OR_ID
+container-plugin: PATH_OR_ID
+project-plugin:   PATH_OR_ID
+builder-plugin:   PATH_OR_ID
+store-plugin:     PATH_OR_ID
+count:            1
+
+```
